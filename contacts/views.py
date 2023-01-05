@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-
 from carzone import settings
 from contacts.models import Contact
 from django.core.mail import send_mail

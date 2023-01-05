@@ -165,3 +165,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'test@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
+
+try:
+    from .local_settings import *
+except ImportError:
+    print('Looks like no local file. You are on production')

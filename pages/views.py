@@ -1,5 +1,9 @@
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from carzone import settings
 from .models import *
 from cars.models import *
 
@@ -28,7 +32,29 @@ def about(request):
         'teams':team,
     }
     return render(request, 'pages/about.html', data)
-def contact(request):
-    return render(request, 'pages/contact.html', {})
+
 def services(request):
     return render(request, 'pages/services.html', {})
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+
+        # admin_info = User.objects.get(is_superuser=True).email
+        # send_mail(
+        #     f'{name} / {subject} / {phone} ',
+        #     message,
+        #     settings.EMAIL_HOST_USER,
+        #     [email,admin_info],
+        #     fail_silently=False,
+        # )
+
+        messages.success(request,'Thank you for contact us')
+
+        return redirect('contact')
+
+    return render(request, 'pages/contact.html', {})
